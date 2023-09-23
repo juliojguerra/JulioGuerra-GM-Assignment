@@ -1,0 +1,14 @@
+{
+  "name": "julioguerra-gm-assignment",
+  "version": "1.0.0",
+  "description": "UI and API tests for ToolsQA in https://demoqa.com/",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.38.1",
+    "@types/node": "^20.6.3"
+  }
+}
