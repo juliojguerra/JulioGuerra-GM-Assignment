@@ -1,6 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 import WebTablesPage from "./WebTablesPage";
-import BrokenLinksImages from "./BrokenLinksImages";
+import BrokenLinksImagesPage from "./BrokenLinksImagesPage";
 
 class ElementsPage {
   page: Page;
@@ -25,7 +25,7 @@ class ElementsPage {
 
   async clickOnBrokenLinksImages() {
     await this.brokenLinksImagesOption.click();
-    return new BrokenLinksImages(this.page);
+    return new BrokenLinksImagesPage(this.page);
   }
 }
 
