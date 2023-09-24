@@ -78,6 +78,7 @@ class WebTablesPage {
   }
 
   getEditRow(textContent: string) {
+    // Get the first element with the corresponding textContent
     return this.page.getByRole("row", { name: textContent }).nth(0);
   }
 

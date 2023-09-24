@@ -10,7 +10,7 @@ test.beforeEach(async function ({ page }) {
   await homePage.go();
 });
 
-test("User can enter and edit data in webtables", async function ({}) {
+test("TC01 - User can enter and edit data in webtables", async function ({}) {
   // TC01 - Scenario A: Verify user can enter new data into the table
   const elementsPage = await homePage.navigateToElements();
   const webTablesPage = await elementsPage.clickOnWebTables();
@@ -19,10 +19,9 @@ test("User can enter and edit data in webtables", async function ({}) {
 
   const registrationFormModal = await webTablesPage.getModal();
 
-  await expect(
-    registrationFormModal,
-    "Registration Form modal was not displayed"
-  ).toBeVisible();
+  await expect
+    .soft(registrationFormModal, "Registration Form modal was not displayed")
+    .toBeVisible();
 
   await webTablesPage.fillRegistrationForm(addData);
   await webTablesPage.submitRegistrationForm();
@@ -48,4 +47,18 @@ test("User can enter and edit data in webtables", async function ({}) {
 
   expect(editRowRecord).toContain(editData.newFirstName);
   expect(editRowRecord).toContain(editData.newLastName);
+});
+
+test("TC02 - Verify broken image", async function ({ page, baseURL }) {
+  const elementsPage = await homePage.navigateToElements();
+  const brokenLinksImages = await elementsPage.clickOnBrokenLinksImages();
+  const brokenImage = brokenLinksImages.getFirstBrokenImage();
+
+  const isVisible = await brokenImage.isVisible();
+
+  expect(isVisible, "Broken image is visible now").toBe(false);
+});
+
+test("TC03 - Verify user can submit the form", async function ({ page }) {
+  // const elementsPage = await homePage.navigateToForms();
 });
