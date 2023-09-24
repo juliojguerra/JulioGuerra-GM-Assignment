@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "UI and API tests for ToolsQA in https://demoqa.com/",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
