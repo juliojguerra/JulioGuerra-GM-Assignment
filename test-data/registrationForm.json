@@ -1,0 +1,15 @@
+{
+  "addData": {
+    "firstName": "Alden",
+    "lastName": "Cantrell",
+    "age": "30",
+    "email": "test@test.com",
+    "salary": "12345",
+    "department": "QA"
+  },
+  "editData": {
+    "oldFirstName": "Alden",
+    "newFirstName": "Gerimedica",
+    "newLastName": "BV"
+  }
+}
