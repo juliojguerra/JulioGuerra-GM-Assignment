@@ -45,7 +45,7 @@ async function generateToken(baseURL: string) {
   expect(response.status()).toBe(200);
 
   const responseJson = await response.json();
-  console.log("responseJson", responseJson);
+
   return responseJson.token;
 }
 
@@ -60,10 +60,9 @@ test("Create a new user", async ({ baseURL }) => {
   expect(response.status()).toBe(201);
 
   const responseJson = await response.json();
-  console.log("responseJson", responseJson);
+
   userID = responseJson.userID;
   token = await generateToken(baseURL);
-  console.log("token: ", token);
 
   expect(responseJson).toHaveProperty("userID");
   expect(responseJson).toHaveProperty("username");
@@ -89,8 +88,6 @@ test("Verify is not possible to create user with the same userName", async ({
   expect(responseJson).toHaveProperty("code");
   expect(responseJson).toHaveProperty("message");
   expect(responseJson.message).toEqual("User exists!");
-
-  // console.log(responseJson);
 });
 
 // Add a list of books
@@ -109,11 +106,8 @@ test("Add a list of books", async ({ baseURL }) => {
     },
   });
 
-  console.log("response.text", response.text);
-
   expect(response.ok()).toBeTruthy();
   expect(response.status()).toBe(201);
 
   const responseJson = await response.json();
-  console.log("add books responseJson", responseJson);
 });

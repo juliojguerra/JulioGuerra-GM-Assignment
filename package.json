@@ -4,7 +4,9 @@
   "description": "UI and API tests for ToolsQA in https://demoqa.com/",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test"
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "test:debug": "npx playwright test --debug"
   },
   "keywords": [],
   "author": "",
