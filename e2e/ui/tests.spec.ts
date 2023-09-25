@@ -27,7 +27,7 @@ test.beforeEach(async function ({ browser }) {
   await homePage.go();
 });
 
-test("TC01 - User can enter and edit data in webtables", async function ({}) {
+test("@ui TC01 - User can enter and edit data in webtables", async function ({}) {
   // TC01 - Scenario A: Verify user can enter new data into the table
   const elementsPage = await homePage.navigateToElements();
   const webTablesPage = await elementsPage.clickOnWebTables();
@@ -66,7 +66,7 @@ test("TC01 - User can enter and edit data in webtables", async function ({}) {
   expect(editRowRecord).toContain(editData.newLastName);
 });
 
-test("TC02 - Verify broken image", async function () {
+test("@ui TC02 - Verify broken image", async function () {
   const elementsPage = await homePage.navigateToElements();
   const brokenLinksImages = await elementsPage.clickOnBrokenLinksImages();
   const brokenImage = brokenLinksImages.getFirstBrokenImage();
@@ -76,7 +76,7 @@ test("TC02 - Verify broken image", async function () {
   expect(isVisible, "Broken image is visible now").toBe(false);
 });
 
-test("TC03 - Verify user can submit the form", async function () {
+test("@ui TC03 - Verify user can submit the form", async function () {
   const formsPage = await homePage.navigateToForms();
   await formsPage.clickOnPracticeForm();
   await formsPage.fillPracticeForm(practiceFormData);
@@ -108,7 +108,7 @@ test("TC03 - Verify user can submit the form", async function () {
   );
 });
 
-test("TC04 - Verify the progress bar", async function () {
+test("@ui TC04 - Verify the progress bar", async function () {
   const widgetsPage = await homePage.navigateToWidget();
   const progressBarPage = await widgetsPage.clickOnProgressBar();
 
@@ -138,7 +138,7 @@ test("TC04 - Verify the progress bar", async function () {
   expect.soft(progressBarPage.startButton).toBeVisible();
 });
 
-test("TC05 - Verify the tooltip", async function () {
+test("@ui TC05 - Verify the tooltip", async function () {
   const expectedTooltipText = "You hovered over the Button";
   const widgetsPage = await homePage.navigateToWidget();
   const toolTipsPage = await widgetsPage.clickOnToolTips();
@@ -152,7 +152,7 @@ test("TC05 - Verify the tooltip", async function () {
   expect.soft(tooltipText).toContain(expectedTooltipText);
 });
 
-test("TC06 - Verify user can drag and drop", async function () {
+test("@ui TC06 - Verify user can drag and drop", async function () {
   const interactionsPage = await homePage.navigateToInteractions();
   const droppablePage = await interactionsPage.clickOnDroppable();
 
