@@ -41,7 +41,7 @@ class WebTablesPage {
     return this.modal;
   }
 
-  async getRegistrationFormTitle() {
+  getRegistrationFormTitle() {
     return this.registrationFormTitle;
   }
 
