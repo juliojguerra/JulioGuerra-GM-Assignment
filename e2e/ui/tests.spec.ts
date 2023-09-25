@@ -1,9 +1,10 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, Page } from "@playwright/test";
 import HomePage from "../../page-objects/HomePage";
 import { addData, editData } from "../../test-data/registrationForm.json";
 import practiceFormData from "../../test-data/practiceForm.json";
 
 let homePage: HomePage;
+let page: Page;
 
 test.beforeEach(async function ({ browser }) {
   const context = await browser.newContext();
@@ -20,7 +21,7 @@ test.beforeEach(async function ({ browser }) {
     }
   });
 
-  const page = await context.newPage();
+  page = await context.newPage();
 
   homePage = new HomePage(page);
   await homePage.go();
@@ -105,4 +106,61 @@ test("TC03 - Verify user can submit the form", async function () {
   expect(studentInfoModal.stateCity).toEqual(
     `${practiceFormData.state} ${practiceFormData.city}`
   );
+});
+
+test("TC04 - Verify the progress bar", async function () {
+  const widgetsPage = await homePage.navigateToWidget();
+  const progressBarPage = await widgetsPage.clickOnProgressBar();
+
+  expect.soft(progressBarPage.progressBarHeader).toBeVisible();
+
+  const progressBarWidth = await progressBarPage.getProgressBarWidth();
+
+  // Progress bar width at the start should be 0%
+  expect.soft(progressBarWidth).toContain("width: 0%");
+  expect.soft(progressBarPage.startButton).toBeVisible();
+
+  // Verify full bar
+  await progressBarPage.clickOnStartButton();
+  await progressBarPage.waitForProgressBarToFill();
+  const finalProgressBarWidth = await progressBarPage.getProgressBarWidth();
+
+  // Progress bar width at the end should be 100%
+  expect.soft(finalProgressBarWidth).toContain("width: 100%");
+  expect.soft(progressBarPage.resetButton).toBeVisible();
+
+  // Reset button
+  await progressBarPage.clickOnResetButton();
+  const restartedProgressBarWidth = await progressBarPage.getProgressBarWidth();
+
+  // After clicking on Restart, progress bar  should be 0%
+  expect.soft(restartedProgressBarWidth).toContain("width: 0%");
+  expect.soft(progressBarPage.startButton).toBeVisible();
+});
+
+test("TC05 - Verify the tooltip", async function () {
+  const expectedTooltipText = "You hovered over the Button";
+  const widgetsPage = await homePage.navigateToWidget();
+  const toolTipsPage = await widgetsPage.clickOnToolTips();
+
+  expect.soft(toolTipsPage.hoverMeButton).toBeVisible();
+
+  await toolTipsPage.hoverButton();
+
+  const tooltipText = await toolTipsPage.getToolTipText();
+
+  expect.soft(tooltipText).toContain(expectedTooltipText);
+});
+
+test("TC06 - Verify user can drag and drop", async function () {
+  const interactionsPage = await homePage.navigateToInteractions();
+  const droppablePage = await interactionsPage.clickOnDroppable();
+
+  expect.soft(droppablePage.header).toBeVisible();
+  expect.soft(await droppablePage.getDragMeBoxTitle()).toContain("Drag me");
+  expect.soft(await droppablePage.getDropHereBoxTitle()).toContain("Drop here");
+
+  await droppablePage.dragAndDropToCenter();
+
+  expect.soft(await droppablePage.getDropHereBoxTitle()).toContain("Dropped!");
 });
