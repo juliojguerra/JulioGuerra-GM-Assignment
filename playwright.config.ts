@@ -31,8 +31,8 @@ export default defineConfig({
     trace: "on-first-retry",
     baseURL:
       process.env.STAGING === "1"
-        ? "http://staging.demoqa.com/"
-        : "http://demoqa.com/",
+        ? "https://staging.demoqa.com"
+        : "https://demoqa.com",
     screenshot: "only-on-failure",
   },
 

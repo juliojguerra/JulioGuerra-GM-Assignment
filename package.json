@@ -4,14 +4,20 @@
   "description": "UI and API tests for ToolsQA in https://demoqa.com/",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test"
+    "test": "npx playwright test",
+    "test:ui": "npx playwright test --grep @ui",
+    "test:api": "npx playwright test --grep @api",
+    "test:headed": "npx playwright test --headed",
+    "test:debug": "npx playwright test --debug"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@faker-js/faker": "^8.1.0",
     "@playwright/test": "^1.38.1",
-    "@types/node": "^20.6.3"
+    "@types/node": "^20.6.3",
+    "faker": "^6.6.6"
   },
   "dependencies": {
     "dotenv": "^16.3.1"
