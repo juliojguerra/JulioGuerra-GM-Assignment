@@ -1,11 +1,27 @@
 import { test, expect } from "@playwright/test";
 import HomePage from "../../page-objects/HomePage";
-
 import { addData, editData } from "../../test-data/registrationForm.json";
+import practiceFormData from "../../test-data/practiceForm.json";
 
 let homePage: HomePage;
 
-test.beforeEach(async function ({ page }) {
+test.beforeEach(async function ({ browser }) {
+  const context = await browser.newContext();
+
+  // Disable googleAds
+  await context.route("**/*", async (route) => {
+    if (
+      route.request().url().startsWith("https://googleads.") ||
+      route.request().url().startsWith("https://tpc.googlesyndication")
+    ) {
+      await route.abort();
+    } else {
+      await route.continue();
+    }
+  });
+
+  const page = await context.newPage();
+
   homePage = new HomePage(page);
   await homePage.go();
 });
@@ -49,7 +65,7 @@ test("TC01 - User can enter and edit data in webtables", async function ({}) {
   expect(editRowRecord).toContain(editData.newLastName);
 });
 
-test("TC02 - Verify broken image", async function ({ page, baseURL }) {
+test("TC02 - Verify broken image", async function () {
   const elementsPage = await homePage.navigateToElements();
   const brokenLinksImages = await elementsPage.clickOnBrokenLinksImages();
   const brokenImage = brokenLinksImages.getFirstBrokenImage();
@@ -59,6 +75,34 @@ test("TC02 - Verify broken image", async function ({ page, baseURL }) {
   expect(isVisible, "Broken image is visible now").toBe(false);
 });
 
-test("TC03 - Verify user can submit the form", async function ({ page }) {
-  // const elementsPage = await homePage.navigateToForms();
+test("TC03 - Verify user can submit the form", async function () {
+  const formsPage = await homePage.navigateToForms();
+  await formsPage.clickOnPracticeForm();
+  await formsPage.fillPracticeForm(practiceFormData);
+  await formsPage.submitForm();
+
+  const modalHeaderText = await formsPage.getModalHeaderText();
+
+  expect.soft(modalHeaderText).toContain("Thanks for submitting the form");
+
+  const studentInfoModal = await formsPage.getInformationFromModal();
+
+  expect(studentInfoModal.studentFullName).toEqual(
+    `${practiceFormData.firstName} ${practiceFormData.lastName}`
+  );
+  expect(studentInfoModal.studentEmail).toEqual(practiceFormData.email);
+  expect(studentInfoModal.gender).toEqual(practiceFormData.gender);
+  expect(studentInfoModal.mobile).toEqual(practiceFormData.mobile);
+
+  // Pending to compare string dates "15 Jan 1990" vs "15 January,1990"
+  // expect(studentInfoModal.dateOfBirth).toContain(practiceFormData.dateOfBirth);
+
+  expect(studentInfoModal.subjects).toEqual(practiceFormData.subjects);
+  expect(studentInfoModal.hobbies).toEqual(practiceFormData.hobbies);
+  expect(studentInfoModal.currentAddress).toEqual(
+    practiceFormData.currentAddress
+  );
+  expect(studentInfoModal.stateCity).toEqual(
+    `${practiceFormData.state} ${practiceFormData.city}`
+  );
 });
