@@ -34,7 +34,10 @@ npm install
 
 ## Usage
 1. Go to the main folder via console.
-2. To execute tests via Playwright, execute `npm run test`
+2. To run UI tests, execute `npm run test:ui`
+3. To run API tests, execute `npm run test:api`
+
+See more options to run tests in the package.json file
 
 ## Additional information 
 
