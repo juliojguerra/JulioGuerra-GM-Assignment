@@ -15,6 +15,10 @@ class ToolTipsPage {
   }
 
   async hoverButton() {
+    // Pending to find a better approach than adding a wait time
+    const WAIT_TIME_OUT = 2000; //ms
+    await this.page.waitForTimeout(WAIT_TIME_OUT);
+
     await this.hoverMeButton.hover();
   }
 
