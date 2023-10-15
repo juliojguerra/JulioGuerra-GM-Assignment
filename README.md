@@ -1,4 +1,4 @@
-# JulioGuerra-GM-Assignment
+# Automated Tests using Playwright + Typescript
 UI and API tests for ToolsQA in https://demoqa.com/
 
 ## Tests
@@ -15,8 +15,8 @@ UI Tests:
 
 API tests:
 - Create a user
-- Add a list of books (WIP)
-- Remove one of the added books (WIP)
+- Add a list of books (Pending)
+- Remove one of the added books (Pending)
 
 ## Stack
 - playwright: ^1.38.1
